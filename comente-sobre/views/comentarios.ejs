@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bluesoft - Desafio</title>
+  <style>
+    body {
+      text-align: center;
+      margin: 0;
+      padding: 0 20px; /* Margens esquerda e direita de 20 pixels */
+      font-family: Arial, sans-serif;
+      background-color: #FFFFFF;
+    }
+
+    h1 {
+      color: #FF6F59;
+      font-size: 48px;
+    }
+
+    .comment-list {
+      margin-top: 30px;
+      text-align: left;
+    }
+
+    .comment {
+      margin-bottom: 20px;
+      padding: 20px;
+      border: 1px solid #B2B09B;
+      border-radius: 5px;
+      background-color: #F0F7F4;
+      color: #254441;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .comment .email {
+      font-weight: bold;
+    }
+
+    .comment .content {
+      margin-top: 10px;
+      color: #254441;
+    }
+
+    .add-comment-form {
+      position: sticky;
+      top: 0;
+      background-color: #F0F7F4;
+      padding: 20px;
+      text-align: left;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    .add-comment-form input[type="email"],
+    .add-comment-form textarea {
+      margin-bottom: 10px;
+      padding: 12px;
+      border: 1px solid #B2B09B;
+      border-radius: 5px;
+      font-size: 16px;
+      width: 300px;
+    }
+
+    .add-comment-form button[type="submit"] {
+      padding: 12px 30px;
+      background-color: #43AA8B;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="color: #FF6F59;">Comentários sobre <%= assunto %></h1>
+
+  <div class="add-comment-form">
+    <form method="post" action="/comente-sobre/<%= assunto %>">
+      <input type="email" name="email" placeholder="Seu e-mail" required><br>
+      <textarea name="comentario" placeholder="Seu comentário" rows="4" required></textarea><br>
+      <button type="submit">Enviar Comentário</button>
+    </form>
+  </div>
+
+  <div class="comment-list">
+    <% if (commentList.length > 0) { %>
+      <% commentList.forEach(function(comment) { %>
+        <div class="comment">
+          <div class="email"><%= comment.email %></div>
+          <div class="content"><%= comment.comentario %></div>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>Nenhum comentário encontrado.</p>
+    <% } %>
+  </div>
+
+</body>
+</html>

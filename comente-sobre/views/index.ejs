@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bluesoft - Desafio</title>
+  <style>
+    body {
+      text-align: center;
+      margin-top: 150px;
+    }
+
+    h1 {
+      font-size: 48px;
+      color: #FF6F59;
+    }
+
+    .search-form {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .search-form input[type="text"] {
+      padding: 8px;
+      border: 1px solid #254441;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .search-form button[type="submit"] {
+      padding: 8px 20px;
+      background-color: #43AA8B;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>COMENTE-SOBRE</h1>
+
+  <form class="search-form" method="get" action="/comente-sobre">
+    <input type="text" name="assunto" required autofocus>
+    <button type="submit">Pesquisar</button>
+  </form>
+</body>
+</html>
