@@ -3,11 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <title>Minha Página Inicial</title>
+    <style>
+        body {
+            margin: 0;
+            height: 19.2cm;
+            background: linear-gradient(to bottom, #FF6F59 50%, #43AA8B 50%);
+        }
+        img {
+            position: absolute;
+            width: 12%;
+            height: 22%;
+        }
+        .container{
+            border: 5px solid black;
+            margin: 0.5cm;
+            height: 18.3cm;
+        }
+
+        .formulario {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            display: flex;
+            align-items: center;
+        }
+        .pesquisa {
+            border-radius: 40px;
+            border: 5px solid #43AA8B;
+            background-color: black;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            opacity: 1;
+            width: 23cm;
+            height: 1.5cm;
+            padding-left: 0.5cm;
+        }
+        .busca {
+            border: 5px solid #43AA8B;
+            background-color: black;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            cursor: pointer;
+            width: 3cm;
+            height: 1.5cm;
+        }
+        input::placeholder {
+            color: white;
+        }
+        input:focus::placeholder {
+            color: transparent;
+        }
+    </style>
 </head>
 <body>
-    <form action="/comente-sobre/buscar" method="post">
-        <input type="text" name="assunto" placeholder="Digite um assunto">
-        <input type="submit" value="Buscar">
-    </form>
+    <img src="http://localhost:8080/images/logo.png" alt="logo">
+    <div class="container">
+        <form action="/comente-sobre/buscar" method="post" class="formulario">
+            <input type="text" name="assunto" placeholder="Digite um assunto para conversar com outros usuários" class="pesquisa">
+            <input type="submit" value="buscar" class="busca">
+        </form>
+    </div>
 </body>
 </html>
