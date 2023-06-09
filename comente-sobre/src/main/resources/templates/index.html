@@ -62,10 +62,10 @@
 <body>
     <img src="http://localhost:8080/images/logo.png" alt="logo">
     <div class="container">
-        <form action="/comente-sobre/buscar" method="post" class="formulario">
-            <input type="text" name="assunto" placeholder="Digite um assunto para conversar com outros usuários" class="pesquisa">
-            <input type="submit" value="buscar" class="busca">
-        </form>
+    <form th:action="@{/comente-sobre}" method="post" class="formulario">
+        <input type="text" id="topico" name="topico" placeholder="Digite um assunto para conversar com outros usuários" class="pesquisa">
+        <input type="submit" value="Pesquisar" class="busca">
+    </form>
     </div>
 </body>
 </html>

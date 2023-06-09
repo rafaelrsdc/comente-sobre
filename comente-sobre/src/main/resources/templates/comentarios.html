@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Comentários</title>
+</head>
+<body>
+    <h1>Comentários sobre o tópico: <span th:text="${topico}"></span></h1>
+    <form th:action="@{/comente-sobre/{topico}(topico=${topico})}" method="post" th:object="${novoComentario}">
+        <label for="email">E-mail:</label>
+        <input type="text" id="email" name="email" th:field="*{email}">
+        <br>
+        <label for="comentario">Comentário:</label>
+        <textarea id="comentario" name="comentario" th:field="*{comentario}"></textarea>
+        <br>
+        <input type="submit" value="Comentar">
+    </form>
+    <br>
+    <h2>Comentários anteriores:</h2>
+    <div th:each="comentario : ${comentarios}">
+        <p><strong>E-mail:</strong> <span th:text="${comentario.email}"></span></p>
+        <p><strong>Comentário:</strong> <span th:text="${comentario.comentario}"></span></p>
+        <hr>
+    </div>
+</body>
+</html>
