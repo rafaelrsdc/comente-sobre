@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -27,8 +29,10 @@ public class CommentController {
 
     @PostMapping("/comente-sobre")
     public String redirecionar(@RequestParam("topico") String topico) {
-        String topicoSemAcento = removeAccents(topico);
-        return "redirect:/comente-sobre/" + topicoSemAcento;
+        String topicoCodificado = URLEncoder.encode(topico, StandardCharsets.UTF_8)
+                .replaceAll("\\+", "%20");
+
+        return "redirect:/comente-sobre/" + topicoCodificado;
     }
 
     private String removeAccents(String input) {
@@ -49,9 +53,11 @@ public class CommentController {
     @PostMapping("/comente-sobre/{topico}")
     public String adicionarComentario(@PathVariable("topico") String topico,
                                       @ModelAttribute("novoComentario") Comentario novoComentario) {
+        String topicoCodificado = URLEncoder.encode(topico, StandardCharsets.UTF_8)
+                .replaceAll("\\+", "%20");
         novoComentario.setTopico(topico);
         commentRepository.save(novoComentario);
-        return "redirect:/comente-sobre/" + topico;
+        return "redirect:/comente-sobre/" + topicoCodificado;
     }
 }
 
