@@ -1,12 +1,12 @@
 package com.example.demo;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CommentController {
-    private Map<String, List<Comentario>> comentarios = new HashMap<>();
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @GetMapping("/comente-sobre")
     public String pesquisar(Model model) {
@@ -27,8 +29,10 @@ public class CommentController {
 
     @PostMapping("/comente-sobre")
     public String redirecionar(@RequestParam("topico") String topico) {
-        String topicoSemAcento = removeAccents(topico);
-        return "redirect:/comente-sobre/" + topicoSemAcento;
+        String topicoCodificado = URLEncoder.encode(topico, StandardCharsets.UTF_8)
+                .replaceAll("\\+", "%20");
+
+        return "redirect:/comente-sobre/" + topicoCodificado;
     }
 
     private String removeAccents(String input) {
@@ -39,7 +43,7 @@ public class CommentController {
 
     @GetMapping("/comente-sobre/{topico}")
     public String exibirComentarios(@PathVariable("topico") String topico, Model model) {
-        List<Comentario> listaComentarios = comentarios.getOrDefault(topico, new ArrayList<>());
+        List<Comentario> listaComentarios = commentRepository.findByTopico(topico);
         model.addAttribute("topico", topico);
         model.addAttribute("comentarios", listaComentarios);
         model.addAttribute("novoComentario", new Comentario());
@@ -49,10 +53,11 @@ public class CommentController {
     @PostMapping("/comente-sobre/{topico}")
     public String adicionarComentario(@PathVariable("topico") String topico,
                                       @ModelAttribute("novoComentario") Comentario novoComentario) {
-        List<Comentario> listaComentarios = comentarios.getOrDefault(topico, new ArrayList<>());
-        listaComentarios.add(novoComentario);
-        comentarios.put(topico, listaComentarios);
-        return "redirect:/comente-sobre/" + topico;
+        String topicoCodificado = URLEncoder.encode(topico, StandardCharsets.UTF_8)
+                .replaceAll("\\+", "%20");
+        novoComentario.setTopico(topico);
+        commentRepository.save(novoComentario);
+        return "redirect:/comente-sobre/" + topicoCodificado;
     }
 }
 
