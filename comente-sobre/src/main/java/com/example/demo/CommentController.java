@@ -24,7 +24,7 @@ public class CommentController {
     @GetMapping("/comente-sobre")
     public String pesquisar(Model model) {
         model.addAttribute("topico", "");
-        return "pesquisar";
+        return "index";
     }
 
     @PostMapping("/comente-sobre")
