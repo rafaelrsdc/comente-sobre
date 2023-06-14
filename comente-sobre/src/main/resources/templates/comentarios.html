@@ -3,24 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <title>Comentários</title>
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(to bottom, #FF6F59 50%, #43AA8B 50%);
+        }
+        img {
+            position: absolute;
+            width: 12%;
+            height: 22%;
+        }
+        .container{
+            border: 5px solid black;
+            margin: 0.5cm;
+            height: 18.4cm;
+        }
+        .comentarioEmail {
+            background-color: #254441;
+            border: #254441;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            opacity: 1;
+            margin: 0.3cm;
+            text-align: center;
+            width: 14.2cm;
+        }
+        .botaoPost {
+            background-color: #254441;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            cursor: pointer;
+            width: 3cm;
+            height: 1cm;
+            margin-bottom: 0.1cm;
+        }
+        input::placeholder {
+            color: white;
+        }
+        input:focus::placeholder {
+            color: transparent;
+        }
+        textarea::placeholder {
+            color: white;
+        }
+        textarea:focus::placeholder {
+            color: transparent;
+        }
+        
+        h1{
+            text-align: center;
+        }
+        .postComentario {
+            position: relative;
+            width: 15cm;
+            margin-left: 22cm;
+            background-color: #254441;
+        }
+    </style>
 </head>
 <body>
-    <h1>Comentários sobre o tópico: <span th:text="${topico}"></span></h1>
-    <form th:action="@{/comente-sobre/{topico}(topico=${topico})}" method="post" th:object="${novoComentario}">
-        <label for="email">E-mail:</label>
-        <input type="text" id="email" name="email" th:field="*{email}">
+    <img src="http://localhost:8080/images/logo.png" alt="logo">
+    <div class="container">
+        <h1>TÓPICO: <span th:text="${topico}"></span></h1>
+        <form th:action="@{/comente-sobre/{topico}(topico=${topico})}" method="post" th:object="${novoComentario}" class="postComentario">
+            <input type="submit" value="Post" class="botaoPost">
+            <input type="button" value="Clear" class="botaoPost" onclick="limparInputs()">
+            <input type="text" id="email" name="email" th:field="*{email}" placeholder="E-mail:" class="comentarioEmail">
+            <textarea id="comentario" name="comentario" th:field="*{comentario}" placeholder="Comentário:" class="comentarioEmail" style="border: 1px solid white; padding-bottom: 0.5cm;"></textarea>
+        </form>        
         <br>
-        <label for="comentario">Comentário:</label>
-        <textarea id="comentario" name="comentario" th:field="*{comentario}"></textarea>
-        <br>
-        <input type="submit" value="Comentar">
-    </form>
-    <br>
-    <h2>Comentários anteriores:</h2>
-    <div th:each="comentario : ${comentarios}">
-        <p><strong>E-mail:</strong> <span th:text="${comentario.email}"></span></p>
-        <p><strong>Comentário:</strong> <span th:text="${comentario.comentario}"></span></p>
-        <hr>
+        <h2>Comentários anteriores:</h2>
+        <div th:each="comentario : ${comentarios}">
+            <p><strong>E-mail:</strong> <span th:text="${comentario.email}"></span></p>
+            <p><strong>Comentário:</strong> <span th:text="${comentario.comentario}"></span></p>
+            <hr>
+        </div>
     </div>
+    <script>
+        function limparInputs() {
+            document.getElementById("email").value = "";
+            document.getElementById("comentario").value = "";
+        }
+    </script>    
 </body>
 </html>
