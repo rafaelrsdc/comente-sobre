@@ -7,6 +7,7 @@
         body {
             margin: 0;
             background: linear-gradient(to bottom, #FF6F59 50%, #43AA8B 50%);
+            font-family: Arial, Helvetica, sans-serif;
         }
         img {
             position: absolute;
@@ -16,7 +17,8 @@
         .container{
             border: 5px solid black;
             margin: 0.5cm;
-            height: 18.4cm;
+            height: 100%;
+            padding-top: 2.7cm;
         }
         .comentarioEmail {
             background-color: #254441;
@@ -29,7 +31,7 @@
             text-align: center;
             width: 14.2cm;
         }
-        .botaoPost {
+        .botaoComent {
             background-color: #254441;
             color: white;
             font-weight: bold;
@@ -38,6 +40,7 @@
             width: 3cm;
             height: 1cm;
             margin-bottom: 0.1cm;
+            margin-left: 0.1cm;
         }
         input::placeholder {
             color: white;
@@ -60,26 +63,45 @@
             width: 15cm;
             margin-left: 22cm;
             background-color: #254441;
+            margin-bottom: 0.5cm;
+        }
+        .antigoComentario {
+            position: relative;
+            width: 15cm;
+            margin-bottom: 4.8cm;
+            margin-left: 1cm;
+            background-color: #254441;
+            padding: 0.5cm;
+            color: white;
+            margin-top: 1cm;
+        }
+        .antigoComentario h2{
+            font-size: 20px;
+        }
+        .antigoComentario p{
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
     <img src="http://localhost:8080/images/logo.png" alt="logo">
+    <h1>TÓPICO: <span th:text="${topico}"></span></h1>
     <div class="container">
-        <h1>TÓPICO: <span th:text="${topico}"></span></h1>
+        <div class="antigoComentario">
+            <h2>Comentários anteriores:</h2>
+            <div th:each="comentario : ${comentarios}">
+                <p><strong>E-mail:</strong> <span th:text="${comentario.email}"></span></p>
+                <p><strong>Comentário:</strong> <span th:text="${comentario.comentario}"></span></p>
+                <hr>
+            </div>
+        </div>
+        <br>
         <form th:action="@{/comente-sobre/{topico}(topico=${topico})}" method="post" th:object="${novoComentario}" class="postComentario">
-            <input type="submit" value="Post" class="botaoPost">
-            <input type="button" value="Clear" class="botaoPost" onclick="limparInputs()">
             <input type="text" id="email" name="email" th:field="*{email}" placeholder="E-mail:" class="comentarioEmail">
             <textarea id="comentario" name="comentario" th:field="*{comentario}" placeholder="Comentário:" class="comentarioEmail" style="border: 1px solid white; padding-bottom: 0.5cm;"></textarea>
-        </form>        
-        <br>
-        <h2>Comentários anteriores:</h2>
-        <div th:each="comentario : ${comentarios}">
-            <p><strong>E-mail:</strong> <span th:text="${comentario.email}"></span></p>
-            <p><strong>Comentário:</strong> <span th:text="${comentario.comentario}"></span></p>
-            <hr>
-        </div>
+            <input type="submit" value="Post" class="botaoComent">
+            <input type="button" value="Clear" class="botaoComent" onclick="limparInputs()">
+        </form>  
     </div>
     <script>
         function limparInputs() {
