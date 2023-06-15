@@ -48,11 +48,16 @@ public class CommentController {
 
     @PostMapping("/comente-sobre/{topico}")
     public String adicionarComentario(@PathVariable("topico") String topico,
-                                      @ModelAttribute("novoComentario") Comentario novoComentario) {
+                                    @ModelAttribute("novoComentario") Comentario novoComentario) {
         List<Comentario> listaComentarios = comentarios.getOrDefault(topico, new ArrayList<>());
         listaComentarios.add(novoComentario);
         comentarios.put(topico, listaComentarios);
         return "redirect:/comente-sobre/" + topico;
     }
+
+    public Map<String, List<Comentario>> getComentarios() {
+        return comentarios;
+    }
+
 }
 
