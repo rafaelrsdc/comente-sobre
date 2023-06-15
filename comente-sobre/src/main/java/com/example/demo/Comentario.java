@@ -15,9 +15,5 @@ public class Comentario {
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
 	}
-
-    // Construtor, getters e setters
-
-    // ...
 }
 
