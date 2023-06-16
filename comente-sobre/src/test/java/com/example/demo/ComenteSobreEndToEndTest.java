@@ -15,7 +15,7 @@ public class ComenteSobreEndToEndTest {
     @BeforeEach
     public void setUp() {
         // Configurar o WebDriver adequado
-        System.setProperty("webdriver.chrome.driver", "/caminho/para/o/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\gmass\\Downloads\\chromedriver_win32\\chromedriver.exe");
 
         // Inicializar o driver
         driver = new ChromeDriver();
@@ -42,7 +42,7 @@ public class ComenteSobreEndToEndTest {
         driver.findElement(By.cssSelector(".botaoComent")).click();
 
         // Verificar se o comentário foi adicionado com sucesso
-        String comentario = driver.findElement(By.cssSelector(".antigoComentario p")).getText();
+        String comentario = driver.findElement(By.cssSelector(".antigoComentario")).getText();
         Assert.assertTrue(comentario.contains("test@example.com"));
         Assert.assertTrue(comentario.contains("Este é um comentário de teste"));
     }
