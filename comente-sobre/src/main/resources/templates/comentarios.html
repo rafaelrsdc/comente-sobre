@@ -4,89 +4,85 @@
     <meta charset="UTF-8">
     <title>Comentários</title>
     <style>
-        body {
-            margin: 0;
-            background: linear-gradient(to bottom, #FF6F59 50%, #43AA8B 50%);
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        img {
-            position: absolute;
-            width: 12%;
-            height: 22%;
-        }
-        .container{
-            border: 5px solid black;
-            margin: 0.5cm;
+        html, body {
             height: 100%;
+            margin: 0;
+            padding: 0;
         }
-        .comentarioEmail {
-            background-color: #254441;
-            border: #254441;
-            color: white;
-            font-weight: bold;
-            font-size: 20px;
-            opacity: 1;
-            margin: 0.3cm;
-            text-align: center;
-            width: 14.2cm;
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF;
         }
-        .botaoComent {
-            background-color: #254441;
-            color: white;
-            font-weight: bold;
-            font-size: 20px;
-            cursor: pointer;
-            width: 3cm;
-            height: 1cm;
-            margin-bottom: 0.1cm;
-            margin-left: 0.1cm;
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
         }
-        input::placeholder {
-            color: white;
+
+        h1 {
+            color: #FF6F59;
+            font-size: 32px;
+            margin-bottom: 20px;
         }
-        input:focus::placeholder {
-            color: transparent;
-        }
-        textarea::placeholder {
-            color: white;
-        }
-        textarea:focus::placeholder {
-            color: transparent;
-        }
-        
-        h1{
-            text-align: center;
-            margin-bottom: 3.75cm;
-        }
-        .postComentario {
-            position: relative;
-            width: 15cm;
-            margin-left: 22cm;
-            background-color: #254441;
-            margin-bottom: 0.5cm;
-        }
+
         .antigoComentario {
-            position: relative;
-            width: 15cm;
-            margin-bottom: 4.8cm;
-            margin-left: 1cm;
-            background-color: #254441;
-            padding: 0.5cm;
-            color: white;
-            margin-top: 1cm;
+            margin-top: 30px;
+            text-align: left;
         }
-        .antigoComentario h2{
-            font-size: 20px;
+
+        .antigoComentario h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
         }
-        .antigoComentario p{
+
+        .antigoComentario p {
+            margin-bottom: 5px;
+        }
+
+        .postComentario {
+            position: sticky;
+            top: 0;
+            background-color: #FFFFFF;
+            z-index: 1;
+        }
+
+        .postComentario input[type="text"],
+        .postComentario textarea {
+            margin-bottom: 10px;
+            padding: 12px;
+            border: 1px solid #B2B09B;
+            border-radius: 5px;
             font-size: 16px;
+            width: 100%;
+        }
+
+        .botaoComent {
+            padding: 12px 30px;
+            background-color: #43AA8B;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
-    <img src="http://localhost:8080/images/logo.png" alt="logo">
     <div class="container">
         <h1>TÓPICO: <span th:text="${topico}"></span></h1>
+        <form th:action="@{/comente-sobre/{topico}(topico=${topico})}" method="post" th:object="${novoComentario}" class="postComentario">
+            <input type="text" id="email" name="email" th:field="*{email}" placeholder="E-mail:" class="comentarioEmail" >
+            <textarea id="comentario" name="comentario" th:field="*{comentario}" placeholder="Comentário:" class="comentarioEmail" ></textarea>
+            <input type="submit" value="Post" class="botaoComent">
+            <input type="button" value="Clear" class="botaoComent" onclick="limparInputs()">
+        </form>  
         <div class="antigoComentario">
             <h2>Comentários anteriores:</h2>
             <div th:each="comentario : ${comentarios}">
@@ -95,19 +91,14 @@
                 <hr>
             </div>
         </div>
-        <br>
-        <form th:action="@{/comente-sobre/{topico}(topico=${topico})}" method="post" th:object="${novoComentario}" class="postComentario">
-            <input type="text" id="email" name="email" th:field="*{email}" placeholder="E-mail:" class="comentarioEmail">
-            <textarea id="comentario" name="comentario" th:field="*{comentario}" placeholder="Comentário:" class="comentarioEmail" style="border: 1px solid white; padding-bottom: 0.5cm;"></textarea>
-            <input type="submit" value="Post" class="botaoComent">
-            <input type="button" value="Clear" class="botaoComent" onclick="limparInputs()">
-        </form>  
     </div>
     <script>
         function limparInputs() {
             document.getElementById("email").value = "";
             document.getElementById("comentario").value = "";
         }
-    </script>    
+    </script>   
+    
+<!--     <a href="/">Voltar para a página inicial</a> -->
 </body>
 </html>
